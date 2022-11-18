@@ -1,0 +1,71 @@
+# lab 4 adanie 1
+select * from postac;
+select * from postac order by data_ur;
+select * from postac where rodzaj='wiking';
+-- delete from postac where id_postaci= 4;
+-- order by data_ur asc limit 2;
+
+
+# zadanie 1b
+
+show create table postac;
+alter table postac drop primary key;
+# poblem 1- atrybut auto_increment
+alter table postac change id_postaci id_postaci int;
+# lub
+alter table postac modify id_postaci int;
+set foreign_key_checks = 0;
+# problem 2 foreig key
+select @@foreign_key_checks;
+#klucz w tabeli walizka, kluche w tabeli pretwory, izba
+alter table przetwory drop foreign key przetwory_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_2;
+alter table walizka drop foreign key walizka_ibfk_1;
+alter table izba drop foreign key izba_ibfk_1;
+alter table koffe drop foreign key koffe_ibfk_2;
+
+# lab 4 zadanie 2
+
+# Ctrl + /
+
+
+alter table postac add pesel char(11) first;
+insert into postac(pesel) values('62346352453');
+update postac set pesel='62346352453' + id_postaci;
+alter table postac add primary key(pesel);
+select * from postac;
+describe postac;
+alter table postac modify rodzaj enum('wiking','ptak','kobieta','syrena');
+insert into postac values ('62346352453', 10, 'Gertruda_Nieszczera', 'syrena', null, 150, null, null);
+desc postac;
+
+-- select column_type from columns where table_schema='hrypaso'
+
+# lab4 zad 3
+select nazwa from postac where nazwa LIKE '%a%';
+# lub
+select nazwa from postac where nazwa LIKE '[a]';
+
+
+
+
+-- select nazwa from postac where nazwa LIKE '_j%';
+-- select nazwa from postac where nazwa regexp '[a]';
+-- select nazwa from postac where nazwa regexp '^T';
+-- select nazwa from postac where nazwa regexp 'a&';
+-- select nazwa from postac where nazwa regexp '[0-9]{0,3}';
+
+update postac set statek='Santa Maria' where nazwa LIKE '%a%';
+
+# lab 4 zadanie 3b
+select * from statek;
+update statek set max_ladownosc=max_ladownosc * 0.7 where data_wodowania=1900-1999;
+update statek set max_ladownosc=max_ladownosc * 0.7 where data_wodowania > '1900-12-31' and data_wodowania < '2001-01-01';
+update statek set max_ladownosc=max_ladownosc * 0.7 where year(data_wodowania) between 1901 and 2001;
+# lab 4 zad 3c
+
+alter table postac add check(wiek <= 1000);
+show create table postac;
+# lab zadanie 4a
+alter table postac modify rodzaj enum('wiking','ptak','kobieta','syrena','wez');
+insert into postac values ('62345322453', 9, 'loko', 'wez', '2004-11-02', 6, null, null);
