@@ -1,3 +1,4 @@
+Hrypas Oleksandr isi 2
 # lab 4 adanie 1
 select * from postac;
 select * from postac order by data_ur;
